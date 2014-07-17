@@ -45,6 +45,12 @@ GtkMainWindow::GtkMainWindow() :
 	this->signal_delete_event().connect(sigc::mem_fun(*this, &GtkMainWindow::onDestroy));
 
 	this->show_all();
+
+	// TODO: This should be a virtual interface:
+
+	for (auto &t : m_core->getTorrents()) {
+		m_treeview->addCell(t);
+	}
 }
 
 bool GtkMainWindow::onSecTick()
@@ -70,10 +76,10 @@ void GtkMainWindow::onAddBtnClicked()
 
 	switch (result) {
 		case Gtk::RESPONSE_OK:
-			for (auto &f : fc.get_filenames())
-			{
+			for (auto &f : fc.get_filenames()) {
 				shared_ptr<Torrent> t = m_core->addTorrent(f.c_str());
 				m_treeview->addCell(t);
+				m_core->saveTorrentSession();
 			}
 		break;
 	}
@@ -89,6 +95,7 @@ void GtkMainWindow::onAddMagnetBtnClicked()
 		case Gtk::RESPONSE_OK:
 			shared_ptr<Torrent> t = m_core->addTorrent(d.getMagnetURL());
 			m_treeview->addCell(t);
+			m_core->saveTorrentSession();
 		break;
 	}
 }

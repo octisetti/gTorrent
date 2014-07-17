@@ -1,14 +1,16 @@
 #include "Core.hpp"
+#include "Plat.hpp"
+#include <fstream>
 #include "Log.hpp"
 
 gt::Core::Core() :
 	m_running(true)
 {
-	// Fuck your deprecated shit, we're going void down in here
-	// tl;dr, figure out something useful to use the error code for,
-	// like handling what the fuck might happen if listen_on fails kthnx
 	libtorrent::error_code ec;
 	m_session.listen_on(make_pair(6881, 6889), ec);
+
+	// Resume where we last left off
+	loadTorrentSession();
 }
 
 bool gt::Core::isMagnetLink(string const& url)
@@ -24,6 +26,8 @@ bool gt::Core::isRunning()
 
 string gt::Core::getDefaultSavePath()
 {
+	// Keeping this for legacy purposes for now, could be moved to gt::Plat
+
 	#ifndef _WIN32
 	char *savepath = getenv("HOME");
 	return savepath == NULL ? string("") : string(savepath)+"/Downloads";
@@ -77,6 +81,43 @@ shared_ptr<Torrent> gt::Core::addTorrent(string path)
 	return t;
 }
 
+void gt::Core::saveTorrentSession()
+{
+	// session::save_state only saves session information, not 
+	ofstream of(gt::Plat::getFileTorrentSession(), ios::binary);
+
+	size_t len = getTorrents().size();
+	of.write(reinterpret_cast<char*>(&len), sizeof(size_t));
+
+	for (auto &t : getTorrents()) {
+		len = t->getPath().length();
+
+		of.write(reinterpret_cast<char*>(&len), sizeof(size_t));
+		of.write((char*)t->getPath().c_str(), len);
+	}
+
+	of.close();
+}
+
+void gt::Core::loadTorrentSession()
+{
+	ifstream in(gt::Plat::getFileTorrentSession(), ios::binary);
+
+	if (in.good()) {
+		size_t t_files = 0;
+		in.read(reinterpret_cast<char*>(&t_files), sizeof(size_t));
+
+		for (size_t i = 0; i < t_files; ++i) {
+			size_t len = 0;
+			in.read(reinterpret_cast<char*>(&len), sizeof(size_t));
+			char file[len] = {0};
+			in.read((char*) file, len);
+
+			addTorrent(file);
+		}
+	}
+}
+
 void gt::Core::update()
 {
 	/*auto iter = begin(m_torrents);
@@ -107,5 +148,6 @@ void gt::Core::update()
 void gt::Core::shutdown()
 {
 	gt::Log::Debug("Shutting down core library...");
+	saveTorrentSession();
 	m_running = false;
 }

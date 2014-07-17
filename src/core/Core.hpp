@@ -22,6 +22,9 @@ namespace gt
 		vector<shared_ptr<Torrent> > &getTorrents();
 		shared_ptr<Torrent> addTorrent(string path);
 		
+		void saveTorrentSession();
+		void loadTorrentSession();
+
 		bool isRunning();
 		void shutdown();
 		void update();

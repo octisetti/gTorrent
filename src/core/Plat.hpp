@@ -4,7 +4,7 @@
 // or in a large collection of files organized in a directory 
 // served out during compilation time
 
-#ifndef _WIN32_
+#ifndef __WIN32__
 	#include <sys/types.h>
 	#include <sys/stat.h>
 	#define PLAT_FILE_SEP string("/")

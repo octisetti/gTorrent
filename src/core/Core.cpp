@@ -83,7 +83,6 @@ shared_ptr<Torrent> gt::Core::addTorrent(string path)
 
 void gt::Core::saveTorrentSession()
 {
-	// session::save_state only saves session information, not 
 	ofstream of(gt::Plat::getFileTorrentSession(), ios::binary);
 
 	size_t len = getTorrents().size();

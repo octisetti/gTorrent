@@ -4,7 +4,7 @@ string gt::Plat::getHomeDirectory()
 {
 	string d = "./";
 
-	#ifndef _WIN32_
+	#ifndef __WIN32__
 		char *path = getenv("HOME");
 		return (path == NULL) ? d : string(path);
 	#else
@@ -18,7 +18,7 @@ string gt::Plat::getSettingsDirectory()
 {
 	string final = "gtorrent";
 
-	#ifndef _WIN32_
+	#ifndef __WIN32__
 		string path = getHomeDirectory() + PLAT_FILE_SEP + ".config" + PLAT_FILE_SEP + final;
 
 		if (!dirExists(path))
@@ -44,7 +44,7 @@ string gt::Plat::getFileTorrentSession()
 
 bool gt::Plat::dirExists(string path)
 {
-	#ifndef _WIN32_
+	#ifndef __WIN32__
 		struct stat s;
 		stat(path.c_str(), &s);
 
@@ -59,7 +59,7 @@ bool gt::Plat::dirExists(string path)
 
 bool gt::Plat::mkdir(string name, bool rec)
 {
-	#ifndef _WIN32_
+	#ifndef __WIN32__
 		return (::mkdir(name.c_str(), 0755) == 0) ? true : false;
 	#else
 		return false;

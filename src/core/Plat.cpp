@@ -19,27 +19,23 @@ string gt::Plat::getSettingsDirectory()
 	string final = "gtorrent";
 
 	#ifndef __WIN32__
-		string path = getHomeDirectory() + PLAT_FILE_SEP + ".config" + PLAT_FILE_SEP + final;
+		string path = getHomeDirectory() + "/" + ".config" + "/" + final;
 
 		if (!dirExists(path))
 			mkdir(path, true);
 
 		return path;
 	#else
-		TCHAR path[MAX_PATH];
-		if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL, 0, path))) {
-		    PathAppend(path, final);
+		string path = getenv("APPDATA") + "/" + final;
+		mkdir(path);
 
-		    return final;
-		} else {
-			return "." + PLAT_FILE_SEP;
-		}
+		return path;
 	#endif
 }
 
 string gt::Plat::getFileTorrentSession()
 {
-	return getSettingsDirectory() + PLAT_FILE_SEP + "session.gto";
+	return getSettingsDirectory() + "/" + "session.gto";
 }
 
 bool gt::Plat::dirExists(string path)
@@ -59,9 +55,12 @@ bool gt::Plat::dirExists(string path)
 
 bool gt::Plat::mkdir(string name, bool rec)
 {
+	// TODO: Recognize `req` argument
+
 	#ifndef __WIN32__
 		return (::mkdir(name.c_str(), 0755) == 0) ? true : false;
 	#else
-		return false;
+		_mkdir(name.c_str());
+		return true;
 	#endif
 }

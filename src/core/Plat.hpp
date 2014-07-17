@@ -7,12 +7,8 @@
 #ifndef __WIN32__
 	#include <sys/types.h>
 	#include <sys/stat.h>
-	#define PLAT_FILE_SEP string("/")
 #else
-	#include <shlwapi.h>
-	#pragma comment(lib,"shlwapi.lib")
-	#include "shlobj.h"
-	#define PLAT_FILE_SEP string("\\")
+	#include <direct.h> // For _mkdir ?
 #endif
 
 namespace gt

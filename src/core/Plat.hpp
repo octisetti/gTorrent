@@ -9,6 +9,9 @@
 	#include <sys/stat.h>
 	#define PLAT_FILE_SEP string("/")
 #else
+	#include <shlwapi.h>
+	#pragma comment(lib,"shlwapi.lib")
+	#include "shlobj.h"
 	#define PLAT_FILE_SEP string("\\")
 #endif
 

@@ -56,6 +56,7 @@ ADD_EXECUTABLE ( ${PROJECT_NAME}
         src/gui/gtk/GtkMainWindow.cpp
         src/gui/gtk/GtkTorrentTreeView.cpp
         src/core/Core.cpp
+        src/core/Plat.cpp
         src/core/Torrent.cpp
         src/core/Log.cpp
         src/main.cpp

@@ -20,30 +20,31 @@ GtkMainWindow::GtkMainWindow() :
 	// This needs to be refactored
 
 	Gtk::Button *add_torrent_btn = Gtk::manage(new Gtk::Button());
+	Gtk::Button *add_link_btn = Gtk::manage(new Gtk::Button());
+	Gtk::Button *pause_btn = Gtk::manage(new Gtk::Button());
+	Gtk::VSeparator *separator = Gtk::manage(new Gtk::VSeparator());
+	m_treeview = Gtk::manage(new GtkTorrentTreeView());
+
 	add_torrent_btn->set_image_from_icon_name("gtk-add");
 	add_torrent_btn->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));
-	header->add(*add_torrent_btn);
 
-	Gtk::Button *add_link_btn = Gtk::manage(new Gtk::Button());
 	add_link_btn->set_image_from_icon_name("gtk-paste");
 	add_link_btn->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddMagnetBtnClicked));
-	header->add(*add_link_btn);
 
-	Gtk::VSeparator *separator = Gtk::manage(new Gtk::VSeparator());
-	header->add(*separator);
-
-	Gtk::Button *pause_btn = Gtk::manage(new Gtk::Button());
 	pause_btn->set_image_from_icon_name("gtk-media-pause");
+
+	header->add(*add_torrent_btn);
+	header->add(*add_link_btn);
+	header->add(*separator);
 	header->add(*pause_btn);
 
-	this->set_titlebar(*header);
-
-	m_treeview = Gtk::manage(new GtkTorrentTreeView());
 	this->add(*m_treeview);
 
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &GtkMainWindow::onSecTick), 10);
+
 	this->signal_delete_event().connect(sigc::mem_fun(*this, &GtkMainWindow::onDestroy));
 
+	this->set_titlebar(*header);
 	this->show_all();
 }
 

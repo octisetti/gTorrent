@@ -19,11 +19,11 @@ GtkMainWindow::GtkMainWindow() :
 
 	// This needs to be refactored
 
-	Gtk::Button *btn_add_torrent= Gtk::manage(new Gtk::Button());
-	Gtk::Button *btn_add_link= Gtk::manage(new Gtk::Button());
-	Gtk::Button *btn_pause= Gtk::manage(new Gtk::Button());
-	Gtk::VSeparator *separator = Gtk::manage(new Gtk::VSeparator());
-	m_treeview = Gtk::manage(new GtkTorrentTreeView());
+	Gtk::Button     *btn_add_torrent = Gtk::manage(new Gtk::Button());
+	Gtk::Button     *btn_add_link    = Gtk::manage(new Gtk::Button());
+	Gtk::Button     *btn_pause       = Gtk::manage(new Gtk::Button());
+	Gtk::VSeparator *separator       = Gtk::manage(new Gtk::VSeparator());
+	                 m_treeview      = Gtk::manage(new GtkTorrentTreeView());
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");
 	btn_add_torrent->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));

@@ -59,6 +59,7 @@ bool GtkMainWindow::onTreeViewClicked(GdkEventButton *ev)
 {
 	if (ev->type == GDK_BUTTON_PRESS && ev->button == 3) // Right mouse button
 	{
+		m_treemenu->popup(ev->button, ev->time);
 		return true;
 	}
 	// TODO read columns, display ticks depending on whether they are enabled or not

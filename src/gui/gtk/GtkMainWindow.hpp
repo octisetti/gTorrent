@@ -13,12 +13,13 @@ private:
 
 	Gtk::HeaderBar *header;
 	GtkTorrentTreeView *m_treeview;
+        Gtk::Menu *m_treemenu;
 
 	// Signal Responders
 	
 	void onAddBtnClicked();
 	void onAddMagnetBtnClicked();
-        void onTreeViewClicked();
+        bool onTreeViewClicked(GdkEventButton *ev);
 
 public:
 	GtkMainWindow();

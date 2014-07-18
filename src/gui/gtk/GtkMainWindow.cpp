@@ -24,6 +24,7 @@ GtkMainWindow::GtkMainWindow() :
 	Gtk::Button     *btn_pause       = Gtk::manage(new Gtk::Button());
 	Gtk::VSeparator *separator       = Gtk::manage(new Gtk::VSeparator());
 	m_treeview      = Gtk::manage(new GtkTorrentTreeView());
+	m_treemenu      = Gtk::manage(new Gtk::Menu());
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");
 	btn_add_link->set_image_from_icon_name("gtk-paste");
@@ -54,8 +55,12 @@ bool GtkMainWindow::onSecTick()
 	return true;
 }
 
-void GtkMainWindow::onTreeViewClick()
+bool GtkMainWindow::onTreeViewClicked(GdkEventButton *ev)
 {
+	// TODO read columns, display ticks depending on whether they are enabled or not
+	// -- nyanpasu
+	
+	return false;
 }
 
 void GtkMainWindow::onAddBtnClicked()

@@ -57,6 +57,10 @@ bool GtkMainWindow::onSecTick()
 
 bool GtkMainWindow::onTreeViewClicked(GdkEventButton *ev)
 {
+	if (ev->type == GDK_BUTTON_PRESS && ev->button == 3) // Right mouse button
+	{
+		return true;
+	}
 	// TODO read columns, display ticks depending on whether they are enabled or not
 	// -- nyanpasu
 	

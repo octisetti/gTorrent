@@ -26,7 +26,7 @@ string gt::Plat::getSettingsDirectory()
 
 		return path;
 	#else
-		string path = getenv("APPDATA") + "/" + final;
+		string path = string(getenv("APPDATA")) + string("/") + final;
 		mkdir(path);
 
 		return path;

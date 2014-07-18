@@ -26,12 +26,11 @@ GtkMainWindow::GtkMainWindow() :
 	                 m_treeview      = Gtk::manage(new GtkTorrentTreeView());
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");
-	btn_add_torrent->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));
-
 	btn_add_link->set_image_from_icon_name("gtk-paste");
-	btn_add_link->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddMagnetBtnClicked));
-
 	btn_pause->set_image_from_icon_name("gtk-media-pause");
+
+	btn_add_torrent->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));
+	btn_add_link->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddMagnetBtnClicked));
 
 	header->add(*btn_add_torrent);
 	header->add(*btn_add_link);
@@ -39,12 +38,12 @@ GtkMainWindow::GtkMainWindow() :
 	header->add(*btn_pause);
 
 	this->add(*m_treeview);
+	this->set_titlebar(*header);
 
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &GtkMainWindow::onSecTick), 10);
 
 	this->signal_delete_event().connect(sigc::mem_fun(*this, &GtkMainWindow::onDestroy));
 
-	this->set_titlebar(*header);
 	this->show_all();
 }
 

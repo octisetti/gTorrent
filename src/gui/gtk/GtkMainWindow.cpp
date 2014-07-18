@@ -3,6 +3,7 @@
 #include "GtkMainWindow.hpp"
 #include <Application.hpp>
 #include <gtkmm/button.h>
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/hvseparator.h>
 #include <gtkmm/stock.h>
 #include <glibmm.h>
@@ -23,8 +24,14 @@ GtkMainWindow::GtkMainWindow() :
 	Gtk::Button     *btn_add_link    = Gtk::manage(new Gtk::Button());
 	Gtk::Button     *btn_pause       = Gtk::manage(new Gtk::Button());
 	Gtk::VSeparator *separator       = Gtk::manage(new Gtk::VSeparator());
-	m_treeview      = Gtk::manage(new GtkTorrentTreeView());
-	m_treemenu      = Gtk::manage(new Gtk::Menu());
+	m_treeview                       = Gtk::manage(new GtkTorrentTreeView());
+	m_treemenu                       = Gtk::manage(new Gtk::Menu());
+
+	Gtk::RadioButton *test_rb           = Gtk::manage(new Gtk::RadioButton());
+	Gtk::MenuItem *test_mi = Gtk::manage(new Gtk::MenuItem(*test_rb));
+
+	m_treemenu->append(*test_mi);
+	m_treemenu->show_all();
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");
 	btn_add_link->set_image_from_icon_name("gtk-paste");
@@ -57,13 +64,13 @@ bool GtkMainWindow::onSecTick()
 
 bool GtkMainWindow::onTreeViewClicked(GdkEventButton *ev)
 {
+	// TODO read columns, display ticks depending on whether they are enabled or not
+	// -- nyanpasu
 	if (ev->type == GDK_BUTTON_PRESS && ev->button == 3) // Right mouse button
 	{
 		m_treemenu->popup(ev->button, ev->time);
 		return true;
 	}
-	// TODO read columns, display ticks depending on whether they are enabled or not
-	// -- nyanpasu
 	
 	return false;
 }

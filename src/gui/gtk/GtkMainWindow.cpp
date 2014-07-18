@@ -24,13 +24,20 @@ GtkMainWindow::GtkMainWindow() :
 	Gtk::Button     *btn_add_link    = Gtk::manage(new Gtk::Button());
 	Gtk::Button     *btn_pause       = Gtk::manage(new Gtk::Button());
 	Gtk::VSeparator *separator       = Gtk::manage(new Gtk::VSeparator());
-	m_treeview                       = Gtk::manage(new GtkTorrentTreeView());
 	m_treemenu                       = Gtk::manage(new Gtk::Menu());
+	m_treeview                       = Gtk::manage(new GtkTorrentTreeView());
 
-	Gtk::RadioButton *test_rb           = Gtk::manage(new Gtk::RadioButton());
-	Gtk::MenuItem *test_mi = Gtk::manage(new Gtk::MenuItem(*test_rb));
+	for (int i = 0; i < 8; ++i)
+	{
+		Gtk::RadioButton *test_rb           = Gtk::manage(new Gtk::RadioButton());
+		Gtk::Label *test_l = Gtk::manage(new Gtk::Label("Test column"));
+		Gtk::Box *test_box = Gtk::manage(new Gtk::Box());
+		test_box->pack_start(*test_rb);
+		test_box->pack_start(*test_l);
+		Gtk::MenuItem *test_mi = Gtk::manage(new Gtk::MenuItem(*test_box));
+		m_treemenu->append(*test_mi);
+	}
 
-	m_treemenu->append(*test_mi);
 	m_treemenu->show_all();
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");

@@ -31,6 +31,7 @@ GtkMainWindow::GtkMainWindow() :
 
 	btn_add_torrent->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));
 	btn_add_link->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddMagnetBtnClicked));
+        m_treeview->signal_button_press_event().connect(sigc::memfun(*this, &GtkMainWindow::onTreeViewClicked));      
 
 	header->add(*btn_add_torrent);
 	header->add(*btn_add_link);
@@ -51,6 +52,10 @@ bool GtkMainWindow::onSecTick()
 {
 	m_treeview->updateCells();
 	return true;
+}
+
+void GtkMainWindow::onTreeViewClick()
+{
 }
 
 void GtkMainWindow::onAddBtnClicked()

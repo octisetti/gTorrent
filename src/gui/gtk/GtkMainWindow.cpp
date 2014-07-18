@@ -23,7 +23,7 @@ GtkMainWindow::GtkMainWindow() :
 	Gtk::Button     *btn_add_link    = Gtk::manage(new Gtk::Button());
 	Gtk::Button     *btn_pause       = Gtk::manage(new Gtk::Button());
 	Gtk::VSeparator *separator       = Gtk::manage(new Gtk::VSeparator());
-	                 m_treeview      = Gtk::manage(new GtkTorrentTreeView());
+	m_treeview      = Gtk::manage(new GtkTorrentTreeView());
 
 	btn_add_torrent->set_image_from_icon_name("gtk-add");
 	btn_add_link->set_image_from_icon_name("gtk-paste");
@@ -31,7 +31,7 @@ GtkMainWindow::GtkMainWindow() :
 
 	btn_add_torrent->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddBtnClicked));
 	btn_add_link->signal_clicked().connect(sigc::mem_fun(*this, &GtkMainWindow::onAddMagnetBtnClicked));
-        m_treeview->signal_button_press_event().connect(sigc::memfun(*this, &GtkMainWindow::onTreeViewClicked));      
+	m_treeview->signal_button_press_event().connect(sigc::mem_fun(*this, &GtkMainWindow::onTreeViewClicked));      
 
 	header->add(*btn_add_torrent);
 	header->add(*btn_add_link);
@@ -66,7 +66,7 @@ void GtkMainWindow::onAddBtnClicked()
 	fc.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
 	fc.add_button("Select", Gtk::RESPONSE_OK);
 
-  	Glib::RefPtr<Gtk::FileFilter> filter_t = Gtk::FileFilter::create();
+	Glib::RefPtr<Gtk::FileFilter> filter_t = Gtk::FileFilter::create();
 	filter_t->set_name("Torrent Files");
 	filter_t->add_mime_type("application/x-bittorrent");
 	fc.add_filter(filter_t);
@@ -80,7 +80,7 @@ void GtkMainWindow::onAddBtnClicked()
 				shared_ptr<Torrent> t = m_core->addTorrent(f.c_str());
 				m_treeview->addCell(t);
 			}
-		break;
+			break;
 	}
 }
 
@@ -94,7 +94,7 @@ void GtkMainWindow::onAddMagnetBtnClicked()
 		case Gtk::RESPONSE_OK:
 			shared_ptr<Torrent> t = m_core->addTorrent(d.getMagnetURL());
 			m_treeview->addCell(t);
-		break;
+			break;
 	}
 }
 

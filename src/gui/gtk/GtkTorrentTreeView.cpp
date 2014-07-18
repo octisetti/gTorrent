@@ -15,6 +15,9 @@ void GtkTorrentTreeView::setupColumns()
 	unsigned int cid = 0;
 	Gtk::TreeViewColumn *col = nullptr;
 
+        // TODO Set/Retrieve from session state:
+        //  - alignments
+        //  - width
 	cid = this->append_column("Name", m_cols.m_col_name);
 	col = this->get_column(cid - 1);
 	col->set_fixed_width(250);

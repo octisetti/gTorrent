@@ -26,14 +26,14 @@ bool gt::Core::isRunning()
 
 string gt::Core::getDefaultSavePath()
 {
-	#ifndef _WIN32
+#ifndef _WIN32
 	char *savepath = getenv("HOME");
-	return savepath == NULL ? string("") : string(savepath)+"/Downloads";
-	#else
+	return savepath == NULL ? string("") : string(savepath) + "/Downloads";
+#else
 	char *savedrive = getenv("HOMEDRIVE");
 	char *savepath = getenv("HOMEPATH");
-	return savepath == NULL ? string("") : string(savedrive)+string(savepath)+"/Downloads";
-	#endif
+	return savepath == NULL ? string("") : string(savedrive) + string(savepath) + "/Downloads";
+#endif
 }
 
 vector<shared_ptr<Torrent> > &gt::Core::getTorrents()
